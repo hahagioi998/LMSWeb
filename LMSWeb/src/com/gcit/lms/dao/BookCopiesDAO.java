@@ -40,6 +40,11 @@ public class BookCopiesDAO extends BaseDAO<BookCopies> {
 
 	}
 	
+	public Integer getCheckOutBooksCount(Integer branchId) throws SQLException {
+		return getCount("SELECT count(*) AS COUNT FROM tbl_book_copies WHERE branchId=?", new Object[] {branchId});
+	}
+	
+	
 	public BookCopies showBookCopies(BookCopies bookCopies) throws SQLException {
 		List<BookCopies> books = readAll("SELECT * FROM tbl_book_copies WHERE branchId = ? AND bookId = ?", new Object[] { bookCopies.getBranchId(), bookCopies.getBookId() }) ;
 		

@@ -44,14 +44,16 @@ public class BookDAO extends BaseDAO<Book> {
 		save("DELETE FROM tbl_book WHERE bookId = ?", new Object[] { book.getBookId() });
 	}
 
-	public List<Book> readBooksByBranch(Library_Branch libraryBranch) throws SQLException {
+	public List<Book> readBooksByBranch(Library_Branch libraryBranch, Integer pageNo) throws SQLException {
+		setPageNo(pageNo);
 		return readAll("SELECT * FROM tbl_book WHERE bookId IN (SELECT bookId FROM tbl_book_copies WHERE branchId = ?)",
 				new Object[] { libraryBranch.getBranchId() });
 	}
 
-	public List<Book> readBooksByBorrower(Library_Branch libraryBranch, Borrower borrower) throws SQLException {
+	public List<Book> readBooksByBorrower(Library_Branch libraryBranch, Borrower borrower, Integer pageNo) throws SQLException {
+		setPageNo(pageNo);
 		return readAll(
-				"SELECT * FROM tbl_book WHERE bookId IN (SELECT bookId FROM tbl_book_loans WHERE branchId = ? AND cardNo = ?)",
+				"SELECT * FROM tbl_book WHERE bookId IN (SELECT bookId FROM tbl_book_loans WHERE branchId = ? AND cardNo = ? AND dateIn IS null)",
 				new Object[] { libraryBranch.getBranchId(), borrower.getCardNo() });
 	}
 
@@ -93,6 +95,7 @@ public class BookDAO extends BaseDAO<Book> {
 		AuthorDAO adao = new AuthorDAO(conn);
 		GenreDAO gdao = new GenreDAO(conn);
 		PublisherDAO pdao = new PublisherDAO(conn);
+		BookCopiesDAO bcdao = new BookCopiesDAO(conn);
 		List<Book> books = new ArrayList<>();
 		while (rs.next()) {
 			Book b = new Book();
@@ -107,6 +110,7 @@ public class BookDAO extends BaseDAO<Book> {
 			List<Publisher> pub = pdao.readAllFirstLevel(
 					"SELECT * FROM tbl_publisher WHERE publisherId IN (SELECT pubId FROM tbl_book WHERE bookId = ?)", 
 					new Object[] {b.getBookId()});
+			b.setBookCopies(bcdao.readAllFirstLevel("SELECT * FROM tbl_book_copies WHERE bookId = ?", new Object[] {b.getBookId()}));
 			if(pub != null && !pub.isEmpty()) {
 			b.setPublisher(pub.get(0));
 			}

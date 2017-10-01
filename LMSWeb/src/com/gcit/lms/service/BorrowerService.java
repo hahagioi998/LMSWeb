@@ -35,12 +35,12 @@ public class BorrowerService {
 		return null;
 	}
 	
-	public List<Book> readBooksCheckOut(Library_Branch libraryBranch) throws SQLException {
+	public List<Book> readBooksCheckOut(Library_Branch libraryBranch, Integer pageNo) throws SQLException {
 		Connection conn = null;
 		try {
 			conn = util.getConnection();
 			BookDAO bdao = new BookDAO(conn);
-			return bdao.readBooksByBranch(libraryBranch);
+			return bdao.readBooksByBranch(libraryBranch, pageNo);
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		} finally{
@@ -51,12 +51,12 @@ public class BorrowerService {
 		return null;
 	}
 	
-	public List<Book> readBooksReturn (Library_Branch libraryBranch, Borrower borrower) throws SQLException {
+	public List<Book> readBooksReturn(Library_Branch libraryBranch, Borrower borrower, Integer pageNo) throws SQLException {
 		Connection conn = null;
 		try {
 			conn = util.getConnection();
 			BookDAO bdao = new BookDAO(conn);
-			return bdao.readBooksByBorrower(libraryBranch, borrower);
+			return bdao.readBooksByBorrower(libraryBranch, borrower, pageNo);
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		} finally{
@@ -156,5 +156,104 @@ public class BorrowerService {
 		}
 		return false;
 	}
+	
+	public Integer getBranchesCount() throws SQLException{
+		Connection conn = null;
+		try {
+			conn = util.getConnection();
+			Library_BranchDAO bdao = new Library_BranchDAO(conn);
+			return bdao.getBranchesCount();
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally{
+			if(conn!=null){
+				conn.close();
+			}
+		}
+		return null;
+	}
 
+	public Library_Branch readBranchByPK(Integer branchId) throws SQLException{
+		Connection conn = null;
+		try {
+			conn = util.getConnection();
+			Library_BranchDAO bdao = new Library_BranchDAO(conn);
+			return bdao.readBranchByPK(branchId);
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally{
+			if(conn!=null){
+				conn.close();
+			}
+		}
+		
+		return null;
+	}
+
+	public Borrower readBorrowerByPK(Integer borrowerId) throws SQLException{
+		Connection conn = null;
+		try {
+			conn = util.getConnection();
+			BorrowerDAO bdao = new BorrowerDAO(conn);
+			return bdao.readBorrowerByPK(borrowerId);
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally{
+			if(conn!=null){
+				conn.close();
+			}
+		}
+		
+		return null;
+	}
+	
+	public Integer getCheckOutBooksCount(Integer branchId) throws SQLException{
+		Connection conn = null;
+		try {
+			conn = util.getConnection();
+			BookCopiesDAO bcdao = new BookCopiesDAO(conn);
+			return bcdao.getCheckOutBooksCount(branchId);
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally{
+			if(conn!=null){
+				conn.close();
+			}
+		}
+		
+		return 0;
+	}
+	
+	public Integer getLoanedOutBooksCount(Integer bookId, Integer cardNo, Integer branchId) throws SQLException {
+		Connection conn = null;
+		try {
+			conn = util.getConnection();
+			BookLoansDAO bldao = new BookLoansDAO(conn);
+			return bldao.getLoanedOutBooksCount(getBookLoans(branchId, bookId, cardNo));
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally{
+			if(conn!=null){
+				conn.close();
+			}
+		}
+		
+		return 0;
+	}
+	
+	public BookLoans getBookLoans(Integer branchId, Integer bookId, Integer cardNo) throws SQLException{
+		BookLoans bookLoans = new BookLoans();
+		bookLoans.setBookId(bookId);
+		bookLoans.setBranchId(branchId);
+		bookLoans.setCardNo(cardNo);
+		return bookLoans;
+	}
+	
+	public BookCopies getBookCopies(Integer branchId, Integer bookId) throws SQLException{
+		BookCopies bookCopies = new BookCopies();
+		bookCopies.setBookId(bookId);
+		bookCopies.setBranchId(branchId);
+		return bookCopies;
+	}
+	
 }
