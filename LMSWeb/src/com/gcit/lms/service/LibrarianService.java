@@ -31,12 +31,12 @@ public class LibrarianService {
 		return null;
 	}
 	
-	public List<Book> readBooks(Library_Branch libraryBranch) throws SQLException {
+	public List<Book> readBooks(Library_Branch libraryBranch, Integer pageNo) throws SQLException {
 		Connection conn = null;
 		try {
 			conn = util.getConnection();
 			BookDAO bdao = new BookDAO(conn);
-			return bdao.readBooksByBranch(libraryBranch);
+			return bdao.readBooksByBranch(libraryBranch, pageNo);
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		} finally{
@@ -45,6 +45,58 @@ public class LibrarianService {
 			}
 		}
 		return null;
+	}
+	
+	public Integer getBooksBranchCount(Integer branchId) throws SQLException{
+		Connection conn = null;
+		try {
+			conn = util.getConnection();
+			BookCopiesDAO bcdao = new BookCopiesDAO(conn);
+			return bcdao.getCheckOutBooksCount(branchId);
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally{
+			if(conn!=null){
+				conn.close();
+			}
+		}
+		
+		return 0;
+	}
+	
+	public Book readBookByPK(Integer bookId) throws SQLException{
+		Connection conn = null;
+		try {
+			conn = util.getConnection();
+			BookDAO bdao = new BookDAO(conn);
+			return bdao.readBookByPK(bookId);
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally{
+			if(conn!=null){
+				conn.close();
+			}
+		}
+		
+		return null;
+	}
+	
+	public Integer getBooksBrCount(Integer bookId, Integer branchId) throws SQLException{
+		Connection conn = null;
+		try {
+			conn = util.getConnection();
+			BookCopiesDAO bcdao = new BookCopiesDAO(conn);
+			BookCopies bookCopies = bcdao.getBookCopies(bookId, branchId);
+			return bcdao.countBookCopies(bookCopies);
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally{
+			if(conn!=null){
+				conn.close();
+			}
+		}
+		
+		return 0;
 	}
 	
 	public void updateBranch(Library_Branch libraryBranch) throws SQLException{
@@ -62,6 +114,23 @@ public class LibrarianService {
 				conn.close();
 			}
 		}
+	}
+	
+	public Library_Branch readBranchByPK(Integer branchId) throws SQLException{
+		Connection conn = null;
+		try {
+			conn = util.getConnection();
+			Library_BranchDAO bdao = new Library_BranchDAO(conn);
+			return bdao.readBranchByPK(branchId);
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally{
+			if(conn!=null){
+				conn.close();
+			}
+		}
+		
+		return null;
 	}
 	
 	public void updateNoOfCopies(BookCopies bookCopies) throws SQLException{

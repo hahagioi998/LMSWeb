@@ -1,26 +1,21 @@
 <%@include file="include.html"%>
+<%@page import="com.gcit.lms.entity.Library_Branch"%>
+<%@page import="java.util.List"%>
+<%@page import="com.gcit.lms.service.LibrarianService"%>
+<%LibrarianService service = new LibrarianService();
+List<Library_Branch> libraryBranch = service.readBranch("");
+%>
 <div class="container">
-	<table>
-		<tr>
-			<td><a href="author.jsp">Author Services</a></td>
-		</tr>
-		<tr>
-			<td><a href="book.jsp">Book Services</a></td>
-		</tr>
-		<tr>
-			<td><a href="genre.jsp">Genre Services</a></td>
-		</tr>
-		<tr>
-			<td><a href="publisher.jsp">Publisher Services</a></td>
-		</tr>
-		<tr>
-			<td><a href="borrower.jsp">Borrower Services</a></td>
-		</tr>	
-		<tr>
-			<td><a href="branch.jsp">Library Branch Services</a></td>
-		</tr>	
-		<tr>
-			<td><a href="override.jsp">Override Due Date for a loan</a></td>
-		</tr>
-	</table>
+<h2>Choose Your Branch</h2>
+	<form method="post" action="chooseBranch">
+	${statusMessage}
+		Select Branch from list Below: <br/>
+		<select size="10" name="branchId">
+			<%for(Library_Branch lb: libraryBranch) {%>
+			<option value=<%=lb.getBranchId()%>><%=lb.getBranchName()%>&nbsp;@<%=lb.getBranchAddress()%></option>
+			<%} %>
+		</select>
+		<br/><br/>
+		<button type="submit" class="btn btn-primary btn-md">Proceed</button>
+	</form>
 </div>

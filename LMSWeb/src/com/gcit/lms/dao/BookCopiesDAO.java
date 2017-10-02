@@ -55,6 +55,18 @@ public class BookCopiesDAO extends BaseDAO<BookCopies> {
 		return null;
 	}
 	
+	public Integer countBookCopies(BookCopies bookCopies) throws SQLException {
+		List<BookCopies> bc = readAll("SELECT * FROM tbl_book_copies WHERE branchId = ? AND bookId = ?", new Object[] { bookCopies.getBranchId(), bookCopies.getBookId() }) ;
+		
+		if(bc!=null) {
+			
+			BookCopies bookCopy = bc.get(0);
+			return bookCopy.getNoOfCopies();
+			
+		}
+		return null;
+	}
+	
 	public List<BookCopies> readBranches(String bookName) throws SQLException {
 		if (bookName != null && !bookName.isEmpty()) {
 			bookName = "%" + bookName + "%";
@@ -65,6 +77,13 @@ public class BookCopiesDAO extends BaseDAO<BookCopies> {
 			return readAll("SELECT * FROM tbl_book_copies", null);
 		}
 
+	}
+	
+	public BookCopies getBookCopies(Integer bookId, Integer branchId) {
+		BookCopies bookCopies = new BookCopies();
+		bookCopies.setBookId(bookId);
+		bookCopies.setBranchId(branchId);
+		return bookCopies;
 	}
 	
 	public void checkOutBookCopies(BookCopies bookCopies) throws SQLException {
