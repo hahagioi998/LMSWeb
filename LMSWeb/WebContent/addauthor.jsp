@@ -1,4 +1,4 @@
-<%@include file="include.html"%>
+<%@include file="includeadmin.html"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.gcit.lms.entity.Book"%>
 <%@page import="java.util.List"%>
@@ -6,6 +6,7 @@
 <%AdminService service = new AdminService();
 List<Book> books = service.readBooks();
 %>
+<div class="jumbotron">
 <div class="container">
 	<h2>Add New Author</h2>
 	<form method="post" action="addAuthor">
@@ -21,4 +22,5 @@ List<Book> books = service.readBooks();
 		<br/>
 		<button type="submit" class="btn btn-primary btn-md">Save Author</button>
 	</form>
+</div>
 </div>

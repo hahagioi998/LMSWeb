@@ -1,4 +1,4 @@
-<%@include file="include.html"%>
+<%@include file="includeadmin.html"%>
 <%@page import="com.gcit.lms.entity.Book"%>
 <%@page import="com.gcit.lms.service.AdminService"%>
 <%@page import="java.util.ArrayList"%>

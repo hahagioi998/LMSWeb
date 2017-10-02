@@ -1,4 +1,5 @@
-<%@include file="include.html"%>
+<%@include file="includeadmin.html"%>
+<div class="jumbotron">
 <div class="container">
 	<table>
 		<tr>
@@ -8,4 +9,5 @@
 			<td><a href="viewborrower.jsp">View all Borrowers in LMS</a></td>
 		</tr>
 	</table>
+</div>
 </div>

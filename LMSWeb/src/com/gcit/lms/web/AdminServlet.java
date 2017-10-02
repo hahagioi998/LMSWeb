@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.gcit.lms.entity.Author;
 import com.gcit.lms.entity.Book;
+import com.gcit.lms.entity.BookCopies;
 import com.gcit.lms.entity.BookLoans;
 import com.gcit.lms.entity.Borrower;
 import com.gcit.lms.entity.Genre;
@@ -332,7 +333,15 @@ public class AdminServlet extends HttpServlet {
 					libraryBranch.setBranchId(Integer.parseInt(request.getParameter("branchId")));
 				}
 				try {
-					adminService.saveLibraryBranch(libraryBranch);
+					int id = adminService.saveLibraryBranch(libraryBranch);
+					if(!editMode) {
+						String[] bookIds = request.getParameterValues("bookIds");
+						for(String b: bookIds)
+						{
+							BookCopies temp = adminService.getBookCopies(id, Integer.parseInt(b));
+							adminService.saveBookCopies(temp);
+						}
+					}
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -359,22 +368,26 @@ public class AdminServlet extends HttpServlet {
 				if(authorIds != null) {
 				for(String a: authorIds) {
 					Author temp = new Author();
-//					System.out.println(b);
 					temp.setAuthorId(Integer.parseInt(a));
 					authors.add(temp);
 				}
 				book.setAuthors(authors);
-//				String pubId = request.getParameter("publisherIds");
-//				Publisher temp = new Publisher();
-//				temp.readPublisher(Integer.parseInt(pubId));
-//				book.setPublisher(temp);
+
 				}
 				if(editMode){
 					book.setBookId(Integer.parseInt(request.getParameter("bookId")));
 				}
 				try {
 					book.setPublisher(adminService.readPublisherByPK(Integer.parseInt(request.getParameter("publisherIds"))));
-					adminService.saveBook(book);
+					int bookId = adminService.saveBook(book);
+					if(!editMode) {
+						String[] branchIds = request.getParameterValues("branchIds");
+						for(String bc: branchIds)
+						{
+							BookCopies temp = adminService.getBookCopies(Integer.parseInt(bc), bookId);
+							adminService.saveBookCopies(temp);
+						}
+					}
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

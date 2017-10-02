@@ -1,6 +1,6 @@
 <%@page import="com.gcit.lms.entity.Borrower"%>
 <%@page import="com.gcit.lms.service.AdminService"%>
-<%@include file="include.html"%>
+<%@include file="includeadmin.html"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.gcit.lms.entity.Book"%>
 <%@page import="java.util.List"%>

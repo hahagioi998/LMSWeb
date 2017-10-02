@@ -1,4 +1,4 @@
-<%@include file="include.html"%>
+<%@include file="includelibrarian.html"%>
 <%@page import="com.gcit.lms.entity.Library_Branch"%>
 <%@page import="java.util.List"%>
 <%@page import="com.gcit.lms.service.LibrarianService"%>
@@ -6,6 +6,7 @@
 List<Library_Branch> libraryBranch = service.readBranch("");
 %>
 <div class="container">
+<div class="jumbotron">
 <h2>Choose Your Branch</h2>
 	<form method="post" action="chooseBranch">
 	${statusMessage}
@@ -18,4 +19,5 @@ List<Library_Branch> libraryBranch = service.readBranch("");
 		<br/><br/>
 		<button type="submit" class="btn btn-primary btn-md">Proceed</button>
 	</form>
+</div>
 </div>

@@ -1,4 +1,5 @@
-<%@include file="include.html"%>
+<%@include file="includeadmin.html"%>
+<div class="jumbotron">
 <div class="container">
 	<table>
 		<tr>
@@ -23,4 +24,5 @@
 			<td><a href="override.jsp">Override Due Date for a loan</a></td>
 		</tr>
 	</table>
-</div>
+	</div>
+	</div>

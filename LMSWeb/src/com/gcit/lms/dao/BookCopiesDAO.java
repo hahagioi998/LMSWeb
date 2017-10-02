@@ -18,6 +18,11 @@ public class BookCopiesDAO extends BaseDAO<BookCopies> {
 		save("INSERT INTO tbl_book_copies (bookId, branchId, noOfCopies) VALUES (?,?,?)",
 				new Object[] { bookCopies.getBookId(), bookCopies.getBranchId(), bookCopies.getNoOfCopies() });
 	}
+	
+	public void saveBC(BookCopies bookCopies) throws SQLException {
+		save("INSERT INTO tbl_book_copies (bookId, branchId, noOfCopies) VALUES (?,?,5)",
+				new Object[] { bookCopies.getBookId(), bookCopies.getBranchId() });
+	}
 
 	public void updateBookCopies(BookCopies bookCopies) throws SQLException {
 		save("UPDATE tbl_book_copies SET noOfCopies = ? WHERE bookId = ? and branchID = ?",

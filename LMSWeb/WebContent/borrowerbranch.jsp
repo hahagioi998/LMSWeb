@@ -1,4 +1,4 @@
-<%@include file="include.html"%>
+<%@include file="includeborrower.html"%>
 <%@page import="com.gcit.lms.entity.Book"%>
 <%@page import="com.gcit.lms.service.BorrowerService"%>
 <%@page import="java.util.ArrayList"%>

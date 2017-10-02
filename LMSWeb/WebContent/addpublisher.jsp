@@ -1,4 +1,4 @@
-<%@include file="include.html"%>
+<%@include file="includeadmin.html"%>
 <%@page import="com.gcit.lms.service.AdminService"%>
 <%AdminService service = new AdminService();
 %>
