@@ -3237,6 +3237,7 @@ tbody.collapse.show {
 	flex-basis: 100%;
 	-ms-flex-align: center;
 	align-items: center
+	color: white;
 }
 
 .navbar-toggler {

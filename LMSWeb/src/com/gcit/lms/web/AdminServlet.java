@@ -49,7 +49,7 @@ public class AdminServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String reqUrl = request.getRequestURI().substring(request.getContextPath().length(), request.getRequestURI().length());
-		String redirectUrl = "/viewauthors.jsp";
+		String redirectUrl = "/admin.jsp";
 		
 		
 		switch (reqUrl) {
