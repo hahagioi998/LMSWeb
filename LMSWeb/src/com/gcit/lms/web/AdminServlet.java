@@ -206,6 +206,7 @@ public class AdminServlet extends HttpServlet {
 				}
 				if(editMode){
 					author.setAuthorId(Integer.parseInt(request.getParameter("authorId")));
+					message = "Author edited Sucessfully";
 				}
 				try {
 					adminService.saveAuthor(author);
@@ -244,6 +245,7 @@ public class AdminServlet extends HttpServlet {
 				}
 				if(editMode){
 					genre.setGenreId(Integer.parseInt(request.getParameter("genreId")));
+					message = "Genre edited Sucessfully";
 				}
 				try {
 					adminService.saveGenre(genre);
@@ -274,6 +276,7 @@ public class AdminServlet extends HttpServlet {
 				}
 				if(editMode){
 					publisher.setPublisherId(Integer.parseInt(request.getParameter("publisherId")));
+					message = "Publisher edited Sucessfully";
 				}
 				try {
 					adminService.savePublisher(publisher);
@@ -303,6 +306,7 @@ public class AdminServlet extends HttpServlet {
 				}
 				if(editMode){
 					borrower.setCardNo(Integer.parseInt(request.getParameter("borrowerId")));
+					message = "Borrower edited Sucessfully";
 				}
 				try {
 					adminService.saveBorrower(borrower);
@@ -331,6 +335,7 @@ public class AdminServlet extends HttpServlet {
 				}
 				if(editMode){
 					libraryBranch.setBranchId(Integer.parseInt(request.getParameter("branchId")));
+					message = "Branch edited Sucessfully";
 				}
 				try {
 					int id = adminService.saveLibraryBranch(libraryBranch);
@@ -361,9 +366,13 @@ public class AdminServlet extends HttpServlet {
 			if(request.getParameter("bookName").length() > 45){
 				message = "Book Name cannot be more than 45 chars";
 				redirectUrl = "/addbook.jsp";
+//				if(editMode) {
+//				redirectUrl = "/editbook.jsp?bookId="+request.getParameter("bookId");
+//				}
 			}else{
 				book.setTitle(request.getParameter("bookName"));
 				String[] authorIds = request.getParameterValues("authorIds");
+				Integer pubId = Integer.parseInt(request.getParameter("publisherIds"));
 				List<Author> authors = new ArrayList<>();
 				if(authorIds != null) {
 				for(String a: authorIds) {
@@ -376,9 +385,10 @@ public class AdminServlet extends HttpServlet {
 				}
 				if(editMode){
 					book.setBookId(Integer.parseInt(request.getParameter("bookId")));
+					message = "Book edited Sucessfully";
 				}
 				try {
-					book.setPublisher(adminService.readPublisherByPK(Integer.parseInt(request.getParameter("publisherIds"))));
+					book.setPublisher(adminService.readPublisherByPK(pubId));
 					int bookId = adminService.saveBook(book);
 					if(!editMode) {
 						String[] branchIds = request.getParameterValues("branchIds");
@@ -395,6 +405,9 @@ public class AdminServlet extends HttpServlet {
 		}else{
 			message = "Book Name cannot be Empty";
 			redirectUrl = "/addbook.jsp";
+//			if(editMode) {
+//				redirectUrl = "/editbook.jsp?bookId="+request.getParameter("bookId");
+//				}
 		}
 		request.setAttribute("statusMessage", message);
 		return redirectUrl;

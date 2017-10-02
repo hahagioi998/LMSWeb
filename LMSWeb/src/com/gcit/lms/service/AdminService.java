@@ -535,6 +535,23 @@ public class AdminService {
 		return null;
 	}
 	
+	public List<Genre> readGenres() throws SQLException {
+		Connection conn = null;
+		try {
+			conn = util.getConnection();
+			GenreDAO pdao = new GenreDAO(conn);
+			return pdao.readGenres(null);
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
+		}
+
+		return null;
+	}
+	
 	public List<Library_Branch> readBranches() throws SQLException {
 		Connection conn = null;
 		try {

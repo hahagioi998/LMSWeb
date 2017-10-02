@@ -5,6 +5,7 @@
 <%@page import="java.util.List"%>
 <%@page import="com.gcit.lms.entity.Author"%>
 <%@page import="com.gcit.lms.entity.Publisher"%>
+<%@page import="com.gcit.lms.entity.Genre"%>
 <%
 	AdminService service = new AdminService();
 	Integer totalCount = service.getBooksCount();
@@ -49,6 +50,7 @@
 			<th>Book Title</th>
 			<th>Authors</th>
 			<th>Publisher</th>
+			<th>Genres</th>
 			<th>Edit Book</th>
 			<th>Delete Book</th>
 		</tr>
@@ -73,6 +75,12 @@
 					}
 				%>
 			</td>
+			<td>
+			<%
+					for (Genre a : b.getGenres()) {
+							out.println(a.getGenreName() + "|");
+						}
+				%>
 			<td><button type="button"
 					onclick="javascript:location.href='editbook.jsp?bookId=<%=b.getBookId()%>'"
 					class="btn btn-primary btn-sm">Edit</button></td>
