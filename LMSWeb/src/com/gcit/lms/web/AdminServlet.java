@@ -36,7 +36,7 @@ public class AdminServlet extends HttpServlet {
 	private AdminService adminService = new AdminService();
 
 	/**
-	 * @see HttpServlet#HttpServlet()
+	 * @see HttpServletHttpServlet()
 	 */
 	public AdminServlet() {
 		super();
@@ -58,7 +58,7 @@ public class AdminServlet extends HttpServlet {
 			break;
 		
 		case "/deleteAuthor":
-			redirectUrl = deleteAuthor(request, response, redirectUrl);
+			redirectUrl = deleteAuthor(request, response, "/viewauthors.jsp");
 			break;
 			
 		case "/deleteGenre":
@@ -82,7 +82,7 @@ public class AdminServlet extends HttpServlet {
 			break;
 			
 		case "/pageAuthors":
-			redirectUrl = pageAuthors(request, response, redirectUrl);
+			redirectUrl = pageAuthors(request, response, "/viewauthors.jsp");
 			break;
 
 		case "/pageGenres":
@@ -123,14 +123,14 @@ public class AdminServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String reqUrl = request.getRequestURI().substring(request.getContextPath().length(), request.getRequestURI().length());
-		String redirectUrl = "/viewauthors.jsp";
+		String redirectUrl = "/admin.jsp";
 		switch (reqUrl) {
 		case "/addAuthor":
-			redirectUrl = addAuthor(request, redirectUrl, false);
+			redirectUrl = addAuthor(request, "/viewauthors.jsp", false);
 			break;
 			
 		case "/editAuthor":
-			redirectUrl = addAuthor(request, redirectUrl, true);
+			redirectUrl = addAuthor(request, "/viewauthors.jsp", true);
 			break;
 
 		case "/editGenre":	
@@ -561,6 +561,7 @@ public class AdminServlet extends HttpServlet {
 			Integer pageNo = Integer.parseInt(request.getParameter("pageNo"));
 			try {
 				request.setAttribute("books", adminService.readAllLoans(null, pageNo));
+				request.setAttribute("pageNo", pageNo);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -576,6 +577,7 @@ public class AdminServlet extends HttpServlet {
 			Integer pageNo = Integer.parseInt(request.getParameter("pageNo"));
 			try {
 				request.setAttribute("books", adminService.readBooks(null, pageNo));
+				request.setAttribute("pageNo", pageNo);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -591,6 +593,7 @@ public class AdminServlet extends HttpServlet {
 			Integer pageNo = Integer.parseInt(request.getParameter("pageNo"));
 			try {
 				request.setAttribute("authors", adminService.readAuthors(null, pageNo));
+				request.setAttribute("pageNo", pageNo);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -606,6 +609,7 @@ public class AdminServlet extends HttpServlet {
 			Integer pageNo = Integer.parseInt(request.getParameter("pageNo"));
 			try {
 				request.setAttribute("genres", adminService.readGenres(null, pageNo));
+				request.setAttribute("pageNo", pageNo);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -621,6 +625,7 @@ public class AdminServlet extends HttpServlet {
 			Integer pageNo = Integer.parseInt(request.getParameter("pageNo"));
 			try {
 				request.setAttribute("publishers", adminService.readPublishers(null, pageNo));
+				request.setAttribute("pageNo", pageNo);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -636,6 +641,7 @@ public class AdminServlet extends HttpServlet {
 			Integer pageNo = Integer.parseInt(request.getParameter("pageNo"));
 			try {
 				request.setAttribute("borrowers", adminService.readBorrowers(null, pageNo));
+				request.setAttribute("pageNo", pageNo);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -651,6 +657,7 @@ public class AdminServlet extends HttpServlet {
 			Integer pageNo = Integer.parseInt(request.getParameter("pageNo"));
 			try {
 				request.setAttribute("branches", adminService.readLibraryBranch(null, pageNo));
+				request.setAttribute("pageNo", pageNo);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

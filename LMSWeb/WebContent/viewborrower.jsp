@@ -19,6 +19,21 @@
 	}else{
 		borrowers = service.readBorrowers(null, 1);
 	}
+	Integer pageNo = 1;
+	Boolean first = false, last = false;
+	if(request.getAttribute("pageNo")!=null){
+		pageNo = (Integer)request.getAttribute("pageNo");
+	} else {
+		pageNo = 1;
+	}
+	
+	if(pageNo == numOfPages){
+		last = true;
+	}
+	
+	if(pageNo == 1){
+		first = true;
+	}
 %>
 <%
 	if (request.getAttribute("statusMessage") != null) {
@@ -29,14 +44,14 @@
 	<h1>List of Borrowers in LMS&nbsp;&nbsp;&nbsp;&nbsp; Total Borrowers in LMS: <%=totalCount%> Borrowers</h1>
 	<nav aria-label="Page navigation example">
 		<ul class="pagination">
-			<li class="page-item"><a class="page-link" href="#"
+			<li class="page-item<% if(first==true){%> disabled<%}%>"><a class="page-link" href="pageBorrowers?pageNo=<%=pageNo-1%>"
 				aria-label="Previous"> <span aria-hidden="true">&laquo;</span> <span
 					class="sr-only">Previous</span>
 			</a></li>
 			<%for(int i=1; i<=numOfPages; i++){ %>
 			<li class="page-item"><a class="page-link" href="pageBorrowers?pageNo=<%=i%>"><%=i%></a></li>
 			<%} %>
-			<li class="page-item"><a class="page-link" href="#"
+			<li class="page-item<% if(last==true){%> disabled<%}%>"><a class="page-link" href="pageBorrowers?pageNo=<%=pageNo+1%>"
 				aria-label="Next"> <span aria-hidden="true">&raquo;</span> <span
 					class="sr-only">Next</span>
 			</a></li>

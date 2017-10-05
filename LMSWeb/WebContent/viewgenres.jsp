@@ -1,4 +1,4 @@
-<%@include file="includeadmin.html"%>
+\<%@include file="includeadmin.html"%>
 <%@page import="com.gcit.lms.entity.Book"%>
 <%@page import="com.gcit.lms.service.AdminService"%>
 <%@page import="java.util.ArrayList"%>
@@ -19,6 +19,21 @@
 	}else{
 		genres = service.readGenres(null, 1);
 	}
+	Integer pageNo = 1;
+	Boolean first = false, last = false;
+	if(request.getAttribute("pageNo")!=null){
+		pageNo = (Integer)request.getAttribute("pageNo");
+	} else {
+		pageNo = 1;
+	}
+	
+	if(pageNo == numOfPages){
+		last = true;
+	}
+	
+	if(pageNo == 1){
+		first = true;
+	}
 %>
 <%
 	if (request.getAttribute("statusMessage") != null) {
@@ -29,14 +44,14 @@
 	<h1>List of Genres in LMS&nbsp;&nbsp;&nbsp;&nbsp; Total Genres in LMS: <%=totalCount%> Genres</h1>
 	<nav aria-label="Page navigation example">
 		<ul class="pagination">
-			<li class="page-item"><a class="page-link" href="#"
+			<li class="page-item<% if(first==true){%> disabled<%}%>"><a class="page-link" href="pageGenres?pageNo=<%=pageNo-1%>"
 				aria-label="Previous"> <span aria-hidden="true">&laquo;</span> <span
 					class="sr-only">Previous</span>
 			</a></li>
 			<%for(int i=1; i<=numOfPages; i++){ %>
 			<li class="page-item"><a class="page-link" href="pageGenres?pageNo=<%=i%>"><%=i%></a></li>
 			<%} %>
-			<li class="page-item"><a class="page-link" href="#"
+			<li class="page-item<% if(last==true){%> disabled<%}%>"><a class="page-link" href="pageGenres?pageNo=<%=pageNo+1%>"
 				aria-label="Next"> <span aria-hidden="true">&raquo;</span> <span
 					class="sr-only">Next</span>
 			</a></li>

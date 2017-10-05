@@ -25,12 +25,15 @@
 	borrower.setCardNo((Integer)request.getAttribute("cardNo"));
 %>
 <%
-	if (request.getAttribute("statusMessage") != null) {
-		out.println(request.getAttribute("statusMessage"));
-	}
+// 	if (request.getAttribute("statusMessage") != null) {
+// 		out.println(request.getAttribute("statusMessage"));
+// 	}
 %>
 <div class="container">
-	<h1>List of Branches in LMS&nbsp;&nbsp;&nbsp;&nbsp; Total Branches in LMS: <%=totalCount%> Branches</h1>
+  <div class="alert alert-success alert-dismissable fade in">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong><%out.println(request.getAttribute("statusMessage"));%></strong>
+  </div>
 	<h2>Card Number: <%=request.getAttribute("cardNo")%></h2>
 	<nav aria-label="Page navigation example">
 		<ul class="pagination">
