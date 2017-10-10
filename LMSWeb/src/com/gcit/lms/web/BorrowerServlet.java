@@ -197,7 +197,6 @@ public class BorrowerServlet extends HttpServlet {
 			Integer bookId = Integer.parseInt(request.getParameter("bookId"));
 			request.setAttribute("cardNo", cardNo);
 			request.setAttribute("branchId", branchId);
-			
 			try {
 				//add to tbl loans
 				borrowerService.checkOutBook(borrowerService.getBookLoans(branchId, bookId, cardNo), borrowerService.getBookCopies(branchId, bookId));
